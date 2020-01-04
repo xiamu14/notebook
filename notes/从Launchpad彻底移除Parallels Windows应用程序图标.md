@@ -1,3 +1,10 @@
+---
+title: 从Launchpad彻底移除Parallels Windows应用程序图标
+tags: [Import-8bdb]
+created: '2020-01-04T12:58:44.945Z'
+modified: '2020-01-04T16:19:34.610Z'
+---
+
 ## 从Launchpad彻底移除Parallels Windows应用程序图标
 
 > 原文链接：http://www.jianshu.com/p/d7ff188aff7b
@@ -60,28 +67,3 @@ Github token 是用来记录登录的，gist 是具体的云端配置文件
 ```
 
 插件名是 [plugin.author].[plugin.name]，可以在插件商店查看
-
-
-
-## 解决 Github 下载速度太慢的问题
-
-### 描述
-
-从GitHub下载文件一直非常慢，查看下载链接发现最终被指向了Amazon的服务器，下载地址是http://github-cloud.s3.amazonaws.com/，从国内访问Amazon非常慢，所以总是下载失败。
-
-### 解决方案
-
-更改host文件，使该域名指向香港的服务器
-
-- Windows
-
-  > 更改`C:\Windows\System32\drivers\etc\hosts`文件，在文件中追加`219.76.4.4 github-cloud.s3.amazonaws.com`, 将域名指向该IP即可
-
-- Mac
-
-  > 执行 `sudo vi /etc/hosts` 追加 `219.76.4.4 github-cloud.s3.amazonaws.com`
-  >
-  > 最后执行 `ipconfig /flushdns` 命令，刷新 DNS 缓存。
-  >
-  > 或者使用 SwitchHosts 这类 DNS 工具
-
