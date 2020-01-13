@@ -8,30 +8,62 @@
 git branch --edit-description <branch-name>
 ```
 
-2. 查看分支的描述信息
+2. 开启 “描述信息 push 添加到 merge 信息”
+
+   ```bash
+   git config --global merge.branchdesc true
+   ```
+
+3. 查看分支的描述信息
 
 ```bash
 git config branch.<branch-name>.description
 ```
 
-3. 查询全部分支的描述信息
+4. 查询全部远程分支的描述信息
 
 ```bash
-for line in $(git branch -r); do
-   description=$(git config branch.$line.description)
-   if [ -n "$description" ]; then
-    echo "$line\n$description\n"
-   fi
-done
+#!/bin/sh
+function aboutAll {
+   local IFS=$'\n'
+   for line in $(git branch -r); do
+      if [[ $line =~ "HEAD" ]];then
+         continue
+      fi
+      lineCopy=$(echo $line | sed s/[[:space:]]//g)
+      description=$(git log remotes/$lineCopy --grep=about: --pretty=format:"[%cr] %s - %an")
+      if [ -n "$description" ]; then
+      echo "\033[36m[$lineCopy] \033[0m\n$description"
+      fi
+   done
+}
+
+aboutAll
 ```
 
-4. 删除远程分支
+5. 添加查看分支描述信息快捷命令
+
+```bash
+git config --global --add alias.about '!describe() { git config branch."$(git symbolic-ref --short -q HEAD)".description; }; describe'
+```
+
+6. 删除远程分支和本地分支
 
 ```bash
 git branch -r # 查看远程分支
 git branch -r -d origin/<branch-name>
 git push origin :<branch-name>
+git branch -d <branch-name>
 ```
+
+7. 使用 commit 添加分支描述并查看
+
+   ```bash
+   git commit --allow-empty  # 添加空白的commit[即没有修改时添加一条 commit 用于描述分支]
+   git log <branch-name> --grep=<keywords> # 通过关键词查询 commit 信息，分支描述通常以 “about:”, "desc:" 等词开头 
+   ```
+
+   
 
 
 
