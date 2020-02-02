@@ -195,3 +195,47 @@ or
 
 只要给 align-self:设置一个值，就能实现这个目的，那大概率是因为 默认值为 `align-self: stretch`
 修改这个默认值，就能解决宽度 100% 的问题。
+
+
+
+## CSS: flex 布局实现每行固定 div 个数
+
+### 描述
+
+flex 布局要实现每行固定显示子元素的个数
+
+### 解决方案
+
+```html
+<div class="parent">
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+    <div class="child"></div>
+  </div>
+<style >
+  .parent {
+     width: 100%;
+     height: 150px;
+     display: flex;
+     flex-flow: row wrap;
+     align-content: flex-start;
+   }
+
+   .child {
+     box-sizing: border-box;
+     background-color: white;
+     flex: 0 0 33%; // 50% = 2个；33% = 3个；25% = 4个； 20% = 5个 ...
+     height: 50px;
+     border: 1px solid red;
+   }
+</style>
+```
+
+
+
