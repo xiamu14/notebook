@@ -63,17 +63,12 @@ git branch -d <branch-name>
    git log <branch-name> --grep=<keywords> # 通过关键词查询 commit 信息，分支描述通常以 “about:”, "desc:" 等词开头 
    ```
 
-   
-
-
 
 ## git commit template
 
 目前在用的 git commit template 保存在 github gist 里面,由于维护时间较短，所以采用比较简易的 template 。
 
 业界完善的 template 的有 Angular 提供的 template，可以直接参考[这篇文章](https://segmentfault.com/a/1190000009048911)，比较系统的描述了 Angular git commit template 的内容。
-
-
 
 ## git如何从仓库中删除已经被跟踪的文件
 

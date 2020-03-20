@@ -25,13 +25,14 @@
 sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
 phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs/
 electron_mirror=https://npm.taobao.org/mirrors/electron/
+electron-custom-dir=7.0.0
 puppeteer_download_host = https://npm.taobao.org/mirrors
 ```
 
 我顺便加入了 phantomjs_cdnurl 和 electron_mirror ， phantomjs 和 electron 这两个库也会因为同样的原因导致安装失败。同理，其他库如果托管到 s3.amazonaws.com 或其他国内访问不稳定的服务器上的都可以使用这种方案解决。
 另一个方法是使用 cnpm 。
 
-
+终极解决方案：不再使用 node-sass , 改为使用 sass (dart-sass) 
 
 ## 禁止 Safari 将数字识别成电话号码
 
@@ -238,4 +239,43 @@ flex 布局要实现每行固定显示子元素的个数
 ```
 
 
+
+## 解决ios10及以上 Safari 无法禁止缩放问题
+
+### 描述
+
+一般情况下，我们用meta 标签的viewport属性来禁止页面缩放，示例：
+
+```html
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+```
+
+但这种禁止缩放方式在ios10及以上safari的已经无效。
+
+###  解决方案
+
+这里我们通过js代码来实现ios10及以上safari的禁止缩放功能，代码如下：
+
+```js
+//解决safari自带放大功能：阻止双击放大
+var lastTime = 0;
+document.addEventListener('touchstart', function(event) {
+    if (event.touches.length > 1) {
+        event.preventDefault();
+    }
+});
+document.addEventListener('touchend', function(event) {
+    var nowTime = (new Date()).getTime();
+    if (nowTime - lastTime <= 300) {
+        event.preventDefault();
+    }
+    lastTime = nowTime;
+}, false);
+
+// 解决safari自带放大功能：阻止双指放大
+document.addEventListener('gesturestart', function(event) {
+    event.preventDefault();
+});
+
+```
 
